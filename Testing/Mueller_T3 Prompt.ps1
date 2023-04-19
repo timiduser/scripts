@@ -7,10 +7,12 @@
     $pdata = 'ProgramData\TechSmith\Snagit 22'
     $CCN = HOSTNAME
     $fielPath = "\MuellerImage\Snaggit\RegInfo.txt"
+    $vcRedistPath = "{your-path}\VC_redist.x64.exe"
+    $params = "/uninstall /quiet /norestart"
     $choice = Read-Host -Prompt 'Please enter 1 for Laptop or 2 for Desktop'
 # Dell BIOS PS Pre-Setup
     Start-Process "\MuellerImage\CDistro\VC_redist.x64.exe" -Wait -ArgumentList -s
-    Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+    Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope CurrentUser
     Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
     New-Item "$($env:USERPROFILE)\Desktop\BIOS Settings.txt"
 # Dell BIOS PS Install
@@ -168,4 +170,6 @@
 # Configuring customers settings
     Write-Output "This is configuring the customers settings."
 # Removing items installed by script
-    
+    Remove-Item -Force $env:LOCALAPPDATA\PackageManagement\ProviderAssemblies\nuget\2.8.5.208\Microsoft.PackageManagement.NuGetProvider.dll -Force -Scope CurrentUser
+    Uninstall-Module -Module -Name DellBIOSProvider -Force -Scope CurrentUser
+    Start-Process -FilePath $vcRedistPath -ArgumentList $params -Wait
