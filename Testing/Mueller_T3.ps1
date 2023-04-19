@@ -27,7 +27,7 @@
     Set-Item Dellsmbios:\PowerManagement\LidSwitch Disabled *>> "$($env:USERPROFILE)\Desktop\BIOS Settings.txt" #Laptop Only
     Get-Item Dellsmbios:\PowerManagement\AcPwrRcvry *>> "$($env:USERPROFILE)\Desktop\BIOS Settings.txt" #Desktop Only
     Set-Item Dellsmbios:\PowerManagement\AcPwrRcvry On *>> "$($env:USERPROFILE)\Desktop\BIOS Settings.txt" #Desktop Only
-#    Set-Item Dellsmbios:\PowerManagement\AcPwrRcvry "Mu3eu$r2015" *>> "$($env:USERPROFILE)\Desktop\BIOS Settings.txt" Needs to be tested manually before rolling out!!!!!
+#    Set-Item Dellsmbios:\Security\AdminPassword "Mu3eu$r2015" *>> "$($env:USERPROFILE)\Desktop\BIOS Settings.txt" Needs to be tested manually before rolling out!!!!!
     Get-Item Dellsmbios:\PowerManagement\PowerManagement\WakeOnAc *>> "$($env:USERPROFILE)\Desktop\BIOS Settings.txt" #Laptop Only
     Set-Item Dellsmbios:\PowerManagement\WakeOnAc Enabled *>> "$($env:USERPROFILE)\Desktop\BIOS Settings.txt" #Laptop Only
     Get-Item Dellsmbios:\PowerManagement\PowerManagement\WakeOnLan *>> "$($env:USERPROFILE)\Desktop\BIOS Settings.txt" 

@@ -87,7 +87,7 @@
         $outval = "· Changed $avalue settings from $cvalue to $nvalue"
         $outloc = "$($env:USERPROFILE)\Desktop\BIOS Settings.txt"
 
-    #    Set-Item Dellsmbios:\PowerManagement\AcPwrRcvry "Mu3eu$r2015" *>> "$($env:USERPROFILE)\Desktop\BIOS Settings.txt" Needs to be tested manually before rolling out!!!!!
+    #   Set-Item Dellsmbios:\Security\AdminPassword "Mu3eu$r2015" *>> "$($env:USERPROFILE)\Desktop\BIOS Settings.txt" Needs to be tested manually before rolling out!!!!!
 
         $avalue = (Dellsmbios:\SystemConfiguration\UefiNwStack).Attribute
         $cvalue = (Dellsmbios:\SystemConfiguration\UefiNwStack).CurrentValue
