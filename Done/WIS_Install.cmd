@@ -16,18 +16,6 @@ REM Main
         start "" /wait "C:\Apps\Adobe Reader DC\Adobe\Setup.exe"
     REM Install Bomgar
         start "" /wait msiexec.exe /i "C:\Apps\BOMGAR Elevated Permisions\bomgar-elvsvc-win64.msi" /quiet
-    REM Install Cisco Anyconnect
-        start "" /wait msiexec.exe /i "C:\Apps\Cisco AnyConnect installer\Anyconnect-win-4.8.03052-predeploy-k9\anyconnect-win-4.8.03052-core-vpn-predeploy-k9.msi" /quiet
-        REM Copy Profile for Cisco Anyconnect
-            :L1
-            SC queryex "%ServiceName%"|Find "STATE"|Find /v "RUNNING">Nul
-            echo %ERRORLEVEL%
-            if %ERRORLEVEL% EQU 0 GOTO L1
-                echo %ServiceName% is running
-            xcopy /y /i "C:\Apps\Cisco Any Connect Profile\AnyConnectProfile.xsd" "C:\ProgramData\Cisco\Cisco AnyConnect Secure Mobility Client\Profile\"
-            xcopy /y /i  "C:\Apps\Cisco Any Connect Profile\corpGenPop.xml" "C:\ProgramData\Cisco\Cisco AnyConnect Secure Mobility Client\Profile\"
-            @echo off
-            timeout /T 1
     REM Install Global Protect
         start "" /wait msiexec.exe /i "C:\Apps\Global Protect\GlobalProtect64.msi" /qn /quiet PORTAL="gp.crossmark.com"
     REM Install Google Chrome
