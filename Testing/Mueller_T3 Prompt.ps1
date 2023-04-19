@@ -8,7 +8,14 @@
     $CCN = HOSTNAME
     $fielPath = "\MuellerImage\Snaggit\RegInfo.txt"
     $choice = Read-Host -Prompt 'Please enter 1 for Laptop or 2 for Desktop'
-
+# Dell BIOS PS Pre-Setup
+    Start-Process "\MuellerImage\CDistro\VC_redist.x64.exe" -Wait -ArgumentList -s
+    Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+    Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
+    New-Item "$($env:USERPROFILE)\Desktop\BIOS Settings.txt"
+# Dell BIOS PS Install
+    Get-Module DellBIOSProvider
+    Install-Module DellBIOSProvider -Confirm:$false
 # Functions to be called later on
     function DellLaptop {
         $outval = "· Changed $avalue settings from $cvalue to $nvalue"
@@ -158,3 +165,7 @@
         Pause
         Exit
     }
+# Configuring customers settings
+    Write-Output "This is configuring the customers settings."
+# Removing items installed by script
+    
