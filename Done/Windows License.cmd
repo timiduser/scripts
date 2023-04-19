@@ -1,0 +1,1 @@
+start changepk.exe /ProductKey H8BKN-99FFT-TY9TQ-FXMCR-QGPJR 

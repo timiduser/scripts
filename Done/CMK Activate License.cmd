@@ -1,0 +1,1 @@
+start changepk.exe /ProductKey 2DPN8-8G84D-B4YC6-TMCD9-M98WR
