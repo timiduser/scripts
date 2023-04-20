@@ -1,5 +1,5 @@
 # Run Script as Admin
-    if (Test-Path -FilePath "$($env:TEMP)\start.txt") {
+    if (Test-Path -Path "$($env:TEMP)\start.txt") {
         Write-Output "Running as administrator!"
     }
     else {
