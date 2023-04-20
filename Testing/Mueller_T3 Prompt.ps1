@@ -3,7 +3,7 @@
         Write-Output "Running as administrator!"
     }
     else {
-        New-Item "$($env:TEMP)\Desktop\BIOS Settings.txt" -Force
+        New-Item "$($env:TEMP)\start.txt" -Force
         Start-Process powershell.exe "-File",('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
         Exit
     }
