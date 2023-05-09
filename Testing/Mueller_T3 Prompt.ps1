@@ -181,5 +181,6 @@
     Write-Output "This is configuring the customers settings."
 # Removing items installed by script. Need to move this to a scrip on its own and call after a system re-boot.
     Remove-Item -Force $env:ProgramFiles\PackageManagement\ProviderAssemblies\nuget\2.8.5.208\Microsoft.PackageManagement.NuGetProvider.dll
-    Uninstall-Module -Name DellBIOSProvider -Force -Scope CurrentUser
+    Remove-Item -Force $env:LOCALAPPDATA\PackageManagement\ProviderAssemblies\nuget\2.8.5.208\Microsoft.PackageManagement.NuGetProvider.dll
+    Uninstall-Module -Name DellBIOSProvider -Force
     Start-Process -FilePath $vcRedistPath -ArgumentList $params -Wait
