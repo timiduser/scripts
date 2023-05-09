@@ -21,7 +21,7 @@
     $choice = Read-Host -Prompt 'Please enter 1 for Laptop or 2 for Desktop'
 # Dell BIOS PS Pre-Setup
     Clear-Host
-    Start-Process "${PSScriptRoot}\MuellerImage\CDistro\VC_redist.x64.exe" -Wait -ArgumentList -s
+    Start-Process "${PSScriptRoot}\CDistro\VC_redist.x64.exe" -Wait -ArgumentList "/q /norestart"
     Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope CurrentUser
     Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
     New-Item "$($env:USERPROFILE)\Desktop\BIOS Settings.txt" -Force
@@ -34,71 +34,67 @@
     Clear-Host
 # Functions to be called later on
     function DellLaptop {
-        $outval = "· Changed $avalue settings from $cvalue to $nvalue"
         $outloc = "$($env:USERPROFILE)\Desktop\BIOS Settings.txt"
 
         $avalue = (Get-Item Dellsmbios:\USBConfiguration\ThunderboltBoot).Attribute
         $cvalue = (Get-Item Dellsmbios:\USBConfiguration\ThunderboltBoot).CurrentValue
         Set-Item Dellsmbios:\USBConfiguration\ThunderboltBoot Enabled
         $nvalue = (Get-Item Dellsmbios:\USBConfiguration\ThunderboltBoot).CurrentValue
-        Write-Output $outval *>> $outloc
+        Write-Output "· Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
 
-        $avalue = (Get-Item Dellsmbios:\USBConfiguration\ThurnderboltPreBoot).Attribute
-        $cvalue = (Get-Item Dellsmbios:\USBConfiguration\ThurnderboltPreBoot).CurrentValue
-        Set-Item Dellsmbios:\USBConfiguration\ThurnderboltPreBoot Enabled
-        $nvalue = (Get-Item Dellsmbios:\USBConfiguration\ThurnderboltPreBoot).CurrentValue
-        Write-Output $outval *>> $outloc
+        $avalue = (Get-Item Dellsmbios:\USBConfiguration\ThunderboltBootPreBoot).Attribute
+        $cvalue = (Get-Item Dellsmbios:\USBConfiguration\ThunderboltBootPreBoot).CurrentValue
+        Set-Item Dellsmbios:\USBConfiguration\ThunderboltBootPreBoot Enabled
+        $nvalue = (Get-Item Dellsmbios:\USBConfiguration\ThunderboltBootPreBoot).CurrentValue
+        Write-Output "· Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
 
         $avalue = (Get-Item Dellsmbios:\Video\BrightnessBattery).Attribute
         $cvalue = (Get-Item Dellsmbios:\Video\BrightnessBattery).CurrentValue
         Set-Item Dellsmbios:\Video\BrightnessBattery 9
         $nvalue = (Get-Item Dellsmbios:\Video\BrightnessBattery).CurrentValue
-        Write-Output $outval *>> $outloc
+        Write-Output "· Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
 
         $avalue = (Get-Item Dellsmbios:\PowerManagement\LidSwitch).Attribute
         $cvalue = (Get-Item Dellsmbios:\PowerManagement\LidSwitch).CurrentValue
         Set-Item Dellsmbios:\PowerManagement\LidSwitch Disabled
         $nvalue = (Get-Item Dellsmbios:\PowerManagement\LidSwitch).CurrentValue
-        Write-Output $outval *>> $outloc
+        Write-Output "· Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
 
-        $avalue = (Get-Item Dellsmbios:\PowerManagement\PowerManagement\WakeOnAc).Attribute
-        $cvalue = (Get-Item Dellsmbios:\PowerManagement\PowerManagement\WakeOnAc).CurrentValue
-        Get-Item Dellsmbios:\PowerManagement\PowerManagement\WakeOnAc
+        $avalue = (Get-Item Dellsmbios:PowerManagement\WakeOnAc).Attribute
+        $cvalue = (Get-Item Dellsmbios:\PowerManagement\WakeOnAc).CurrentValue
         Set-Item Dellsmbios:\PowerManagement\WakeOnAc Enabled
-        $nvalue = (Get-Item Dellsmbios:\PowerManagement\PowerManagement\WakeOnAc).CurrentValue
-        Write-Output $outval *>> $outloc
+        $nvalue = (Get-Item Dellsmbios:\PowerManagement\WakeOnAc).CurrentValue
+        Write-Output "· Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
 
         $avalue = (Get-Item Dellsmbios:\POSTBehavior\FnLock).Attribute
         $cvalue = (Get-Item Dellsmbios:\POSTBehavior\FnLock).CurrentValue
         Set-Item Dellsmbios:\POSTBehavior\FnLock Enabled
         $nvalue = (Get-Item Dellsmbios:\POSTBehavior\FnLock).CurrentValue
-        Write-Output $outval *>> $outloc
+        Write-Output "· Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
 
     }
     function DellDesktop {
-        $outval = "· Changed $avalue settings from $cvalue to $nvalue"
         $outloc = "$($env:USERPROFILE)\Desktop\BIOS Settings.txt"
 
         $avalue = (Get-Item Dellsmbios:\PowerManagement\AcPwrRcvry).Attribute
         $cvalue = (Get-Item Dellsmbios:\PowerManagement\AcPwrRcvry).CurrentValue
         Set-Item Dellsmbios:\PowerManagement\AcPwrRcvry On
         $nvalue = (Get-Item Dellsmbios:\PowerManagement\AcPwrRcvry).CurrentValue
-        Write-Output $outval *>> $outloc
+        Write-Output "· Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
 
-        $avalue = (Get-Item Dellsmbios:\PowerManagement\PowerManagement\AutoOn).Attribute
-        $cvalue = (Get-Item Dellsmbios:\PowerManagement\PowerManagement\AutoOn).CurrentValue
+        $avalue = (Get-Item Dellsmbios:\PowerManagement\AutoOn).Attribute
+        $cvalue = (Get-Item Dellsmbios:\PowerManagement\AutoOn).CurrentValue
         Set-Item Dellsmbios:\PowerManagement\AutoOn EveryDay
-        $nvalue = (Get-Item Dellsmbios:\PowerManagement\PowerManagement\AutoOn).CurrentValue
-        Write-Output $outval *>> $outloc
+        $nvalue = (Get-Item Dellsmbios:\PowerManagement\AutoOn).CurrentValue
+        Write-Output "· Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
 
-        $avalue = (Get-Item Dellsmbios:\PowerManagement\PowerManagement\AutoOnHr).Attribute
-        $cvalue = (Get-Item Dellsmbios:\PowerManagement\PowerManagement\AutoOnHr).CurrentValue
+        $avalue = (Get-Item Dellsmbios:\PowerManagement\AutoOnHr).Attribute
+        $cvalue = (Get-Item Dellsmbios:\PowerManagement\AutoOnHr).CurrentValue
         Set-Item Dellsmbios:\PowerManagement\AutoOnHr 3
-        $nvalue = (Get-Item Dellsmbios:\PowerManagement\PowerManagement\AutoOnHr).CurrentValue
-        Write-Output $outval *>> $outloc
+        $nvalue = (Get-Item Dellsmbios:\PowerManagement\AutoOnHr).CurrentValue
+        Write-Output "· Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
     }
     function DellAll {
-        $outval = "· Changed $avalue settings from $cvalue to $nvalue"
         $outloc = "$($env:USERPROFILE)\Desktop\BIOS Settings.txt"
 
     #   Set-Item Dellsmbios:\Security\AdminPassword "Mu3eu$r2015" *>> "$($env:USERPROFILE)\Desktop\BIOS Settings.txt" Needs to be tested manually before rolling out!!!!!
@@ -107,25 +103,25 @@
         $cvalue = (Get-Item Dellsmbios:\SystemConfiguration\UefiNwStack).CurrentValue
         Set-Item Dellsmbios:\SystemConfiguration\UefiNwStack Disabled
         $nvalue = (Get-Item Dellsmbios:\SystemConfiguration\UefiNwStack).CurrentValue
-        Write-Output $outval *>> $outloc
+        Write-Output "· Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
 
-        $avalue = (Get-Item Dellsmbios:\PowerManagement\PowerManagement\WakeOnLan).Attribute
-        $cvalue = (Get-Item Dellsmbios:\PowerManagement\PowerManagement\WakeOnLan).CurrentValue
+        $avalue = (Get-Item Dellsmbios:\PowerManagement\WakeOnLan).Attribute
+        $cvalue = (Get-Item Dellsmbios:\PowerManagement\WakeOnLan).CurrentValue
         Set-Item Dellsmbios:\PowerManagement\WakeOnLan LanOnly
-        $nvalue = (Get-Item Dellsmbios:\PowerManagement\PowerManagement\WakeOnLan).CurrentValue
-        Write-Output $outval *>> $outloc
+        $nvalue = (Get-Item Dellsmbios:\PowerManagement\WakeOnLan).CurrentValue
+        Write-Output "· Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
 
         $avalue = (Get-Item Dellsmbios:\Manageability\AmtCap).Attribute
         $cvalue = (Get-Item Dellsmbios:\Manageability\AmtCap).CurrentValue
         Set-Item Dellsmbios:\Manageability\AmtCap Enabled
         $nvalue = (Get-Item Dellsmbios:\Manageability\AmtCap).CurrentValue
-        Write-Output $outval *>> $outloc
+        Write-Output "· Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
 
         $avalue = (Get-Item Dellsmbios:\Manageability\PostMebxKey).Attribute
         $cvalue = (Get-Item Dellsmbios:\Manageability\PostMebxKey).CurrentValue
         Set-Item Dellsmbios:\Manageability\PostMebxKey Enabled
         $nvalue = (Get-Item Dellsmbios:\Manageability\PostMebxKey).CurrentValue
-        Write-Output $outval *>> $outloc
+        Write-Output "· Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
 
     }
 
