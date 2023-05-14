@@ -133,7 +133,7 @@ function DellAll {
     $cvalue = (Get-Item Dellsmbios:\Security\IsSystemPasswordSet).CurrentValue
     Set-Item Dellsmbios:\Security\AdminPassword 'Mu3eu$r2015'
     $nvalue = (Get-Item Dellsmbios:\Security\IsAdminPasswordSet).CurrentValue
-    Write-Output "~ Changed $avalue settings from $cvalue to $nvalue." 'Password is Mu3eu$r2015' *>> $outloc
+    Write-Output "~ Changed $avalue settings from $cvalue to $nvalue." '~ Password is Mu3eu$r2015' *>> $outloc
 }
 function preSetup{
 # Dell BIOS PS Pre-Setup
@@ -158,6 +158,53 @@ function cleanUp {
     Remove-Item -Force $env:TEMP\start.txt
     Uninstall-Module -Name DellBIOSProvider -Force
     Start-Process "${PSScriptRoot}\CDistro\VC_redist.x64.exe" -Wait -ArgumentList "/q /uninstall /norestart"
+}
+
+function compSetting {
+    # Winlogon Registry
+    Write-Output "Setting Winlogon Registry"
+    Start-Process -FilePath 'C:\Drivers\Winlogonfixboot.reg' -Wait -ArgumentList /quiet
+    Clear-Host
+    # Citrix Install
+    New-Item -Pat "$($env:TEMP)\" -Name Temp1.txt -Type "file" -Value "Citrix Installer"
+    Write-Output "Installing Citrix in the background"
+    Start-Process -FilePath 'C:\Drivers\CitrixWorkspaceApp2112.exe' -ArgumentList /silent
+    Clear-Host
+    # Logitech Install
+    New-Item -Path "$($env:TEMP)\" -Name Temp2.txt -Type "file" -Value "Citrix Installer"
+    Write-Output "Installing Logitech Options in the background"
+    Start-Process -FilePath 'C:\Drivers\Logitech SetPoint\options_9.50.269.exe' -Wait -ArgumentList /quiet
+    Clear-Host
+    Write-Output "Installing Logitech Setpoint in the background"
+    Start-Process -FilePath 'C:\Drivers\Logitech SetPoint\SetPoint6.70.55_64.exe' -Wait -ArgumentList /s
+    Clear-Host
+    # Snagit Activation
+    New-Item -Path "$($env:TEMP)\" -Name Temp3.txt -Type "file" -Value "Citrix Installer"
+    Write-Output "Activating Snagit in the background"
+    Copy-Item -Path \MuellerImage\Snaggit\RegInfo.ini -Destination "C:\$pdata" -Force
+    Copy-Item -Path \MuellerImage\Snaggit\RegInfo.txt -Destination "C:\$pdata" -Force
+    Clear-Host
+    # Dell Support Assist
+    New-Item -Path "$($env:TEMP)\" -Name Temp4.txt -Type "file" -Value "Citrix Installer"    
+    Write-Output "Installing Dell Support Assist in the background"
+    Start-Process "\MuellerImage\Dell_Support\SupportAssistLauncher.exe" -Wait -ArgumentList -s
+    Clear-Host
+    Write-Output "Launching Dell Support Assist, please download driver updates then press Enter to continue!"
+    Start-Process Chrome.exe $site
+    Pause
+    # Disable Hibrenate
+    New-Item -Path "$($env:TEMP)\" -Name Temp5.txt -Type "file" -Value "Citrix Installer"
+    Write-Output "Disabling Hibernate"
+    powercfg.exe -h off
+    Clear-Host
+    # Computer Naming
+    $MyName =Read-Host -Prompt 'Input New Computer Name '
+    Write-Output Changing computer name from: $CCN to new computer name: $MyName
+    Rename-Computer -ComputerName $CCN -NewName $MyName
+    Write-Output "Automated section has completed! Please press Enter to close the script."
+    Restart-Computer -Force
+    Pause
+
 }
 #Clears the screen from previous entries
     clearWindow
@@ -219,6 +266,8 @@ function cleanUp {
         Exit
     }
 # Configuring customers settings
+    clearWindow
     Write-Output "This is configuring the customers settings."
+    compSetting
 # Cleans up what was installed and used.
     cleanUp
