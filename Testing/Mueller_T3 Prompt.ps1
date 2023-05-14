@@ -211,7 +211,6 @@ function compSetting {
     preSetup
 # Gets, installs, and imports Dell BIOS Provider to use the commands needed
     bPSInstall
-
 # Decision Making
     if ($choice -eq 1) {
         Clear-Host
