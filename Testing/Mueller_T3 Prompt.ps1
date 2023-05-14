@@ -199,18 +199,29 @@ function compSetting {
     Rename-Computer -ComputerName $CCN -NewName $MyName
     Write-Output "Automated section has completed! Please press Enter to close the script."
 }
+function title {
+    $host.UI.RawUI.WindowTitle = "$Title"
+}
 #Clears the screen from previous entries
     clearWindow
 #Does the needed pre setup needed for Dell BIOS Provider to run and install properly
+    $Title = 'Pre-Setup'
+    title
     preSetup
 # Gets, installs, and imports Dell BIOS Provider to use the commands needed
+    $Title = 'Dell BIOS Setup'
+    title
     bPSInstall
 # Decision Making
+    $Title = 'What type of Computer Setup?'
+    title
     if ($choice -eq 1) {
         Clear-Host
         Write-Output 'Are you sure that you are wanting to run setup for a laptop?'
         $verifi = Read-Host -Prompt 'Y/N'
         if ($verifi -like 'Y' ) {
+            $Title = 'Laptop Setup'
+            title
             DellLaptop
             DellAll
             Pause
@@ -234,6 +245,8 @@ function compSetting {
         Write-Output 'Are you sure that you are wanting to run setup for a desktop?'
         $verifi = Read-Host -Prompt 'Y/N'
         if ($verifi -like 'Y' ) {
+            $Title = 'Desktop Setup'
+            title
             DellDesktop
             DellAll
             Pause
@@ -259,9 +272,13 @@ function compSetting {
     }
 # Configuring customers settings
     clearWindow
+    $Title = 'Computer Settings'
+    title
     Write-Output "This is configuring the customers settings."
     compSetting
 # Cleans up what was installed and used.
+    $Title = 'Script Cleanup'
+    title    
     cleanUp
     Restart-Computer -Force
     Exit
