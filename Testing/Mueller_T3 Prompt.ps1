@@ -204,7 +204,6 @@ function compSetting {
     Write-Output "Automated section has completed! Please press Enter to close the script."
     Restart-Computer -Force
     Pause
-
 }
 #Clears the screen from previous entries
     clearWindow
