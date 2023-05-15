@@ -224,20 +224,34 @@ function title {
             title
             DellLaptop
             DellAll
+            Write-Output 'Laptop BIOS settings have been changed, press enter to move onto computer settings.'
             Pause
         }
         elseif ($verifi -notlike "N") {
             Clear-Host
             Write-Output 'Invalid entry, closing window.'
+            Remove-Item -Force $env:TEMP\start.txt
             Pause
             Exit
         }
         else {
             Clear-Host
             Write-Output 'Press enter to close'
+            Remove-Item -Force $env:TEMP\start.txt
             Pause
             Exit
         }
+    # Configuring customers settings
+        clearWindow
+        $Title = 'Computer Settings'
+        title
+        Write-Output "This is configuring the customers settings."
+        compSetting
+    # Cleans up what was installed and used.
+        $Title = 'Script Cleanup'
+        title    
+        cleanUp
+        Restart-Computer -Force
         Exit
     }
     elseif ($choice -eq 2) {
@@ -249,17 +263,20 @@ function title {
             title
             DellDesktop
             DellAll
+            Write-Output 'Desktop BIOS settings have been changed, press enter to move onto computer settings.'
             Pause
         }
         elseif ($verifi -notlike "N") {
             Clear-Host
             Write-Output 'Invalid entry, closing window.'
+            Remove-Item -Force $env:TEMP\start.txt
             Pause
             Exit
         }
         else {
             Clear-Host
             Write-Output 'Press enter to close'
+            Remove-Item -Force $env:TEMP\start.txt
             Pause
             Exit
         }
