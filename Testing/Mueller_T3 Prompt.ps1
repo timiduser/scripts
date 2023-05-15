@@ -18,6 +18,10 @@
     $params = "/uninstall /quiet /norestart"
     $choice = Read-Host -Prompt 'Please enter 1 for Laptop or 2 for Desktop'
 # Functions to be called later on
+function elivatedRun {
+    Start-Process powershell.exe "-File",('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
+    Exit
+}
 function clearWindow {
     Clear-Host
 }
@@ -150,6 +154,7 @@ function bPSInstall {
 }
 function cleanUp {
 # Removing items installed by script. Need to move this to a scrip on its own and call after a system re-boot.
+    elivatedRun
     Remove-Item -Force $env:PROGRAMFILES\PackageManagement\ProviderAssemblies\nuget\2.8.5.208\Microsoft.PackageManagement.NuGetProvider.dll
     Remove-Item -Force $env:LOCALAPPDATA\PackageManagement\ProviderAssemblies\nuget\2.8.5.208\Microsoft.PackageManagement.NuGetProvider.dll
     Remove-Item -Force $env:TEMP\start.txt
@@ -157,6 +162,7 @@ function cleanUp {
     Start-Process "${PSScriptRoot}\CDistro\VC_redist.x64.exe" -Wait -ArgumentList "/q /uninstall /norestart"
 }
 function compSetting {
+    $outloc = "$($env:USERPROFILE)\Desktop\BIOS Settings.txt"
     # Winlogon Registry
     Write-Output "Setting Winlogon Registry"
     Start-Process -FilePath 'C:\Drivers\Winlogonfixboot.reg' -Wait -Force -ArgumentList /quiet
@@ -195,9 +201,8 @@ function compSetting {
     Clear-Host
     # Computer Naming
     $MyName =Read-Host -Prompt 'Input New Computer Name '
-    Write-Output Changing computer name from: $CCN to new computer name: $MyName
+    Write-Output "Changing computer name from: $CCN to new computer name: $MyName" *>> $outloc
     Rename-Computer -ComputerName $CCN -NewName $MyName
-    Write-Output "Automated section has completed! Please press Enter to close the script."
 }
 function title {
     $host.UI.RawUI.WindowTitle = "$Title"
