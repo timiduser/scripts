@@ -263,6 +263,17 @@ function title {
             Pause
             Exit
         }
+    # Configuring customers settings
+        clearWindow
+        $Title = 'Computer Settings'
+        title
+        Write-Output "This is configuring the customers settings."
+        compSetting
+    # Cleans up what was installed and used.
+        $Title = 'Script Cleanup'
+        title    
+        cleanUp
+        Restart-Computer -Force
         Exit
     }
     else {
@@ -270,15 +281,3 @@ function title {
         Pause
         Exit
     }
-# Configuring customers settings
-    clearWindow
-    $Title = 'Computer Settings'
-    title
-    Write-Output "This is configuring the customers settings."
-    compSetting
-# Cleans up what was installed and used.
-    $Title = 'Script Cleanup'
-    title    
-    cleanUp
-    Restart-Computer -Force
-    Exit
