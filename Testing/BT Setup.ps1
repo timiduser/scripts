@@ -84,9 +84,9 @@ function compSetting {
 function title {
     $host.UI.RawUI.WindowTitle = "$Title"
 }
-#Clears the screen from previous entries
+# Clears the screen from previous entries
     clearWindow
-#Does the needed pre setup needed for Dell BIOS Provider to run and install properly
+# Does the needed pre setup needed for Dell BIOS Provider to run and install properly
     $Title = 'Pre-Setup'
     title
     preSetup
@@ -94,89 +94,4 @@ function title {
     $Title = 'Dell BIOS Setup'
     title
     bPSInstall
-# Decision Making
-    $Title = 'What type of Computer Setup?'
-    title
-    if ($choice -eq 1) {
-        Clear-Host
-        Write-Output 'Are you sure that you are wanting to run setup for a laptop?'
-        $verifi = Read-Host -Prompt 'Y/N'
-        if ($verifi -like 'Y' ) {
-            $Title = 'Laptop Setup'
-            title
-            DellLaptop
-            DellAll
-            Write-Output 'Laptop BIOS settings have been changed, press enter to move onto computer settings.'
-            Pause
-        }
-        elseif ($verifi -notlike "N") {
-            Clear-Host
-            Write-Output 'Invalid entry, closing window.'
-            Remove-Item -Force $env:TEMP\start.txt
-            Pause
-            Exit
-        }
-        else {
-            Clear-Host
-            Write-Output 'Press enter to close'
-            Remove-Item -Force $env:TEMP\start.txt
-            Pause
-            Exit
-        }
-    # Configuring customers settings
-        clearWindow
-        $Title = 'Computer Settings'
-        title
-        Write-Output "This is configuring the customers settings."
-        compSetting
-    # Cleans up what was installed and used.
-        $Title = 'Script Cleanup'
-        title    
-        cleanUp
-        Restart-Computer -Force
-        Exit
-    }
-    elseif ($choice -eq 2) {
-        Clear-Host
-        Write-Output 'Are you sure that you are wanting to run setup for a desktop?'
-        $verifi = Read-Host -Prompt 'Y/N'
-        if ($verifi -like 'Y' ) {
-            $Title = 'Desktop Setup'
-            title
-            DellDesktop
-            DellAll
-            Write-Output 'Desktop BIOS settings have been changed, press enter to move onto computer settings.'
-            Pause
-        }
-        elseif ($verifi -notlike "N") {
-            Clear-Host
-            Write-Output 'Invalid entry, closing window.'
-            Remove-Item -Force $env:TEMP\start.txt
-            Pause
-            Exit
-        }
-        else {
-            Clear-Host
-            Write-Output 'Press enter to close'
-            Remove-Item -Force $env:TEMP\start.txt
-            Pause
-            Exit
-        }
-    # Configuring customers settings
-        clearWindow
-        $Title = 'Computer Settings'
-        title
-        Write-Output "This is configuring the customers settings."
-        compSetting
-    # Cleans up what was installed and used.
-        $Title = 'Script Cleanup'
-        title    
-        cleanUp
-        Restart-Computer -Force
-        Exit
-    }
-    else {
-        Write-Output "Not an available entry. Please select press enter or close out of this window."
-        Pause
-        Exit
-    }
+# Main Code
