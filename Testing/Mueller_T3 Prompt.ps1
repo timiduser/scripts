@@ -77,19 +77,19 @@ function DellDesktop {
     $cvalue = (Get-Item Dellsmbios:\PowerManagement\AcPwrRcvry).CurrentValue
     Set-Item Dellsmbios:\PowerManagement\AcPwrRcvry On
     $nvalue = (Get-Item Dellsmbios:\PowerManagement\AcPwrRcvry).CurrentValue
-    Write-Output "· Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
+    Write-Output "~ Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
 
     $avalue = (Get-Item Dellsmbios:\PowerManagement\AutoOn).Attribute
     $cvalue = (Get-Item Dellsmbios:\PowerManagement\AutoOn).CurrentValue
     Set-Item Dellsmbios:\PowerManagement\AutoOn EveryDay
     $nvalue = (Get-Item Dellsmbios:\PowerManagement\AutoOn).CurrentValue
-    Write-Output "· Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
+    Write-Output "~ Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
 
     $avalue = (Get-Item Dellsmbios:\PowerManagement\AutoOnHr).Attribute
     $cvalue = (Get-Item Dellsmbios:\PowerManagement\AutoOnHr).CurrentValue
     Set-Item Dellsmbios:\PowerManagement\AutoOnHr 3
     $nvalue = (Get-Item Dellsmbios:\PowerManagement\AutoOnHr).CurrentValue
-    Write-Output "· Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
+    Write-Output "~ Changed $avalue settings from $cvalue to $nvalue" *>> $outloc
 }
 function DellAll {
     $outloc = "$($env:USERPROFILE)\Desktop\BIOS Settings.txt"
