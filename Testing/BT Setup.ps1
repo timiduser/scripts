@@ -36,8 +36,6 @@ function cleanUp {
     Start-Process "${PSScriptRoot}\CDistro\VC_redist.x64.exe" -Wait -ArgumentList "/q /uninstall /norestart"
 }
 function compSetting {
-    # Install Firefox
-    # Install Greenshot
     # Install Office
     # Install Splashtop
     # Install VNC
@@ -76,7 +74,11 @@ function compSetting {
     Clear-Host
     # Firefox Install
     Write-Output "Installing Firefox"
-    Start-Process 'C:\Apps\Software\Firefox Install.msi'  -ArgumentList /silent /install
+    Start-Process 'C:\Apps\Software\Firefox Install.msi'  -ArgumentList /qn /quiet
+    Clear-Host
+    # Greenshot Install
+    Write-Output "Installing Greenshot"
+    Start-Process 'C:\Apps\Software\Greenshot.exe'  -ArgumentList /silent /install
     Clear-Host
 }
 function title {
