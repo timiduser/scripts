@@ -78,18 +78,5 @@ function title {
 # Clears the screen from previous entries
     clearWindow
 # Main Code
-'''
-Computer boots up
-Runs on first startup command for powershell
-Script will run as admin
-Scipt just needs to install programs
-No domain join
-No name change
-Cannot install connectwise as of the name
-Things that need to be done after script
-    name change
-    connectwise
-    domain join
-    push S1
-
-'''
+compSetting
+Restart-Computer
