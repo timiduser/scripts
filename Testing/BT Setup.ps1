@@ -27,10 +27,6 @@ function compSetting {
     Write-Output "Setting up Activity Monitoring"
     Copy-Item -Path 'C:\Apps\Software\silentservermode-setup-usr-stl-$$FQsLUlwGXVgeVwcOXRoHDAJUFEoKCQAUUgNWCRMGCUhMDR1WfnF9bXFrfnpzYw==.exe' -Destination "C:\$active" -Force
     Clear-Host
-    # Install SoftPhone
-    Write-Output "Installing Mitel Soft phone"
-    Start-Process -FilePath 'C:\Apps\Software\MicoLab\softphone.msi' -ArgumentList /qn UC_SERVER_HOSTNAME=c1vmas.buchanan.com UC_LANGUAGE=en
-    Clear-Host
     # Annyconnect Install
     Write-Output "Installing Anyconnect VPN"
     Start-Process  -FilePath 'C:\Apps\Software\anyconnect.msi' -ArgumentList /qn /quiet -Wait
