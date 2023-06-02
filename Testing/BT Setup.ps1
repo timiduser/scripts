@@ -71,6 +71,13 @@ function compSetting {
     # Install Splashtop
     Write-Output "Installing Splashtop"
     Start-Process 'C:\Apps\Software\Office\Splashtop.msi'  -ArgumentList /qn /quiet -Wait
+    # Mitel Install
+    Write-Output "Installing Mitel Softphone"
+    Start-Process  -FilePath 'C:\Apps\Software\MicoLab\softphone.msi' -ArgumentList /qn UC_SERVER_HOSTNAME=c1vmas.buchanan.com UC_LANGUAGE=en
+    Clear-Host
+    Write-Output "Installing Mitel Contact Center Client"
+    Start-Process  -FilePath 'C:\Apps\Software\CCC\mccp.exe' -ArgumentList /silent /workflow="Client Component Pack.deploy" /features="Ignite,ContactCenterClient,ContactCenterSoftphone" authentication=Windows /enterpriseip="phonesystem.buchanan.com" -Wait
+    Clear-Host
 }
 function title {
     $host.UI.RawUI.WindowTitle = "$Title"
