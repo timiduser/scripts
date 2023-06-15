@@ -14,8 +14,6 @@
     $pdata = 'ProgramData\TechSmith\Snagit 22'
     $CCN = HOSTNAME
     $fielPath = "${PSScriptRoot}\MuellerImage\Snaggit\RegInfo.txt"
-    $vcRedistPath = "{your-path}\VC_redist.x64.exe"
-    $params = "/uninstall /quiet /norestart"
     $choice = Read-Host -Prompt 'Please enter 1 for Laptop or 2 for Desktop'
 # Functions to be called later on
 function elivatedRun {
@@ -154,12 +152,7 @@ function bPSInstall {
 }
 function cleanUp {
 # Removing items installed by script. Need to move this to a scrip on its own and call after a system re-boot.
-    elivatedRun
-    Remove-Item -Force $env:PROGRAMFILES\PackageManagement\ProviderAssemblies\nuget\2.8.5.208\Microsoft.PackageManagement.NuGetProvider.dll
-    Remove-Item -Force $env:LOCALAPPDATA\PackageManagement\ProviderAssemblies\nuget\2.8.5.208\Microsoft.PackageManagement.NuGetProvider.dll
-    Remove-Item -Force $env:TEMP\start.txt
-    Uninstall-Module -Name DellBIOSProvider -Force
-    Start-Process "${PSScriptRoot}\CDistro\VC_redist.x64.exe" -Wait -ArgumentList "/q /uninstall /norestart"
+Start-Process powershell.exe "${PSScriptRoot}\Mueller_Cleanup.ps1" -Verb RunAs
 }
 function compSetting {
     $outloc = "$($env:USERPROFILE)\Desktop\BIOS Settings.txt"
@@ -256,7 +249,6 @@ function title {
         $Title = 'Script Cleanup'
         title    
         cleanUp
-        Restart-Computer -Force
         Exit
     }
     elseif ($choice -eq 2) {
@@ -295,7 +287,6 @@ function title {
         $Title = 'Script Cleanup'
         title    
         cleanUp
-        Restart-Computer -Force
         Exit
     }
     else {
