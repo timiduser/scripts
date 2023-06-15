@@ -152,7 +152,7 @@ function bPSInstall {
 }
 function cleanUp {
 # Removing items installed by script. Need to move this to a scrip on its own and call after a system re-boot.
-Start-Process powershell.exe "${PSScriptRoot}\Mueller_Cleanup.ps1" -Verb RunAs
+Start-Process powershell.exe "${PSScriptRoot}\Cleanup\Mueller_Cleanup.ps1" -Verb RunAs
 }
 function compSetting {
     $outloc = "$($env:USERPROFILE)\Desktop\BIOS Settings.txt"
