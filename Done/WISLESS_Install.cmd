@@ -1,7 +1,9 @@
 @echo off
 REM Local Variables
     set temp = "%userprofile%\AppData\Local\Temp"
-    set ServiceName=vpnagent
+    set everyone = "%public%\Desktop"
+    set apps = "C:\Apps"
+    set post = "C:\Apps\Post"
 REM Checks if computer has been rebooted and copies script into start
     timeout /T 15 /NOBREAK
     if exist "%temp%\round2.txt" GOTO REMOVAL    
@@ -12,31 +14,25 @@ REM Main
         @echo off
     REM Moves to App folder
         cd C:\Apps
-    REM Install Adobe
-        start "" /wait "C:\Apps\Adobe Reader DC\Adobe\Setup.exe"
-    REM Install Bomgar
-        start "" /wait msiexec.exe /i "C:\Apps\BOMGAR Elevated Permisions\bomgar-elvsvc-win64.msi" /quiet
     REM Install Global Protect
-        start "" /wait msiexec.exe /i "C:\Apps\Global Protect\GlobalProtect64.msi" /qn /quiet PORTAL="gp.crossmark.com"
-    REM Install Google Chrome
-        start "" /wait "C:\Apps\Google Chrome\ChromeStandaloneSetup64.exe" /silent /install
-    REM Install Microsoft Office
-        timeout /T 1
-        cd "C:\Apps\Microsoft Office\Office 365\ODT"
-        start "" /wait setup.exe /configure installOfficeProPlus64.xml
-        timeout /T 5 /NOBREAK
-        CD C:\Apps
-    REM Install Tableau Reader
-        start "" /wait "%C:\Apps\Tableau Reader 10.4 Install\TableauReader-64bit-2020-3-2.exe" /silent /norestart /log /install ACCEPTEULA=1 STARTMENUSHORTCUT=1 DESKTOPSHORTCUT=1
-        :Wait1
-            if exist "C:\Users\Public\Desktop\Tableau Reader 2020.3.lnk" GOTO Nxt
-        GOTO Wait1
-        :Nxt
-    REM Setup Global Protect Pre Login
-        cd "C:\Program Files\Palo Alto Networks\GlobalProtect" 
-        start "" /wait pangps.exe -registerplap
-    REM Install Carbon Black
-        start "" /wait msiexec /q /i "C:\Apps\Carbon Black Installer\installer_vista_win7_win8-64-3.8.0.684.msi" /L* cb_install_log.txt COMPANY_CODE=CEA82RE7WWGBKIC5WM@
+        start "" /wait msiexec.exe /i "C:\Apps\Global Protect\GlobalProtect64.msi" /qn /quiet PORTAL="connect.wisintl.com"
+    REM Install BGInfo
+        md "C:\Windows\BGInfo"
+        xcopy "%post%\BGInfo\" "C:\Windows\BGInfo" /y /q /s /h
+        attrib -h "C:\Windows\BGInfo" /s /d
+        attrib -h "C:\Windows\BGInfo\*.*" /s
+        xcopy "%post%\BGInfo\BGinfo.lnk" "%everyone%"
+    REM AFAPPS.ICO Move
+        xcopy "%post%\AFAPPS.ICO" "%systemroot%" | attrib - h "%systemroo%\AFAPPS.ICO"
+    REM Move desktop shortcuts
+        xcopy "%post%\Desktop Shortcut\Helpdesk.url" "%everyone%" | attrib - h "%everyone%\Helpdesk.url"
+        xcopy "%post%\Desktop Shortcut\HR - Accounting - Edge.lnk" | attrib - h "%everyone%\HR - Accounting - Edge.lnk"
+        xcopy "%post%\Desktop Shortcut\Inventory Operations - Edge.lnk" | attrib - h "%everyone%\Inventory Operations - Edge.lnk"
+    REM Install Zoho
+        start "" /wait msiexec.exe /i "%post%\Zoho\ZA_Access.msi" /q SILENT=TRUE
+    REM Install Certificates
+    REM Install Java
+    REM Install Trend Micro AV
     REM Restart
         :RSTRT
             xcopy "C:\Apps\WIS_Install.cmd" "%AppData%\Microsoft\Windows\Start Menu\Programs\Startup\" /y /q
