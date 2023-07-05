@@ -31,18 +31,23 @@ REM Main
     REM Install Zoho
         start "" /wait msiexec.exe /i "%post%\Zoho\ZA_Access.msi" /q SILENT=TRUE
     REM Install Certificates
+        certutil -addstore -enterprise "root" "%post%\RGIS Root CA.cer"
+        certutil -addstore -enterprise "root" "%post%\WIS-ADCS-CA-01.western-inventory.com_Root.cer"
     REM Install Java
+        start "" /wait "%post%\Trend Micro standalone agent\jre-7u45-windows-i586.exe" /s
     REM Install Trend Micro AV
+        start "" /wait "%post%\Trend Micro standalone agent\VC_redist.x86.exe" /q /norestart
+        start "" /wait "%post%\Trend Micro standalone agent\agent_cloud_x64.msi" /quiet /norestart
     REM Restart
         :RSTRT
-            xcopy "C:\Apps\WIS_Install.cmd" "%AppData%\Microsoft\Windows\Start Menu\Programs\Startup\" /y /q
+            xcopy "C:\Apps\WISLESS_Install.cmd" "%AppData%\Microsoft\Windows\Start Menu\Programs\Startup\" /y /q
             timeout /t 5 /NOBREAK
     REM Domain Join
         :DJ
             timeout /T 5
-            start /wait Powershell.exe -executionpolicy remotesigned -File  C:\Apps\MSAPPS.ps1
+            start /wait Powershell.exe -executionpolicy remotesigned -File  C:\Apps\Post\MSAPPS.ps1
             timeout /T 5
-            start /wait Powershell.exe -executionpolicy remotesigned -File  C:\Apps\WIS_DomainJoin.ps1
+            start /wait Powershell.exe -executionpolicy remotesigned -File  C:\Apps\Post\WIS_DomainJoin.ps1
             timeout /T 5
             exit
     REM Verifying and Cleanup
@@ -50,8 +55,6 @@ REM Main
             if exist "%temp%\round1.txt" del "%temp%\round1.txt"
             timeout /T 5
             echo "R2">%temp%\round2.txt
-            REM Delete installer folder
-                rmdir C:\Apps /q /s
             timeout /T 1
             @echo off
             cls
@@ -66,7 +69,7 @@ REM Main
         :REMOVAL
             if exist "%temp%\round1.txt" del "%temp%\round1.txt"
             if exist "%temp%\round2.txt" del "%temp%\round2.txt"
-            if exist "%AppData%\Microsoft\Windows\Start Menu\Programs\Startup\WIS_Install.cmd" del "%AppData%\Microsoft\Windows\Start Menu\Programs\Startup\WIS_Install.cmd"
+            if exist "%AppData%\Microsoft\Windows\Start Menu\Programs\Startup\WISLESS_Install.cmd" del "%AppData%\Microsoft\Windows\Start Menu\Programs\Startup\WISLESS_Install.cmd"
         REM To reset Global Protect as it doesn't detect profile on first launch 100% of the time
         :GPRESET
             taskkill /F /IM PanGPA.exe /T
