@@ -47,7 +47,7 @@ REM Main
             timeout /T 5
             start /wait Powershell.exe -executionpolicy remotesigned -File  C:\Apps\Post\MSAPPS.ps1
             timeout /T 5
-            start /wait Powershell.exe -executionpolicy remotesigned -File  C:\Apps\Post\WIS_DomainJoin.ps1
+            start /wait Powershell.exe -executionpolicy remotesigned -File  C:\Apps\Post\WISLESS_DomainJoin.ps1
             timeout /T 5
             exit
     REM Verifying and Cleanup
