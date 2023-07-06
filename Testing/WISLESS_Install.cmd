@@ -16,6 +16,10 @@ REM Main
         cd C:\Apps
     REM Install Global Protect
         start "" /wait msiexec.exe /i "C:\Apps\Global Protect\GlobalProtect64.msi" /qn /quiet PORTAL="connect.wisintl.com"
+        timeout /T 5
+        REM To reset Global Protect as it doesn't detect profile on first launch 100% of the time
+        :GPRESET
+            taskkill /F /IM PanGPA.exe /T
     REM Install BGInfo
         md "C:\Windows\BGInfo"
         xcopy "%post%\BGInfo\" "C:\Windows\BGInfo" /y /q /s /h
@@ -47,8 +51,9 @@ REM Main
             timeout /T 5
             start /wait Powershell.exe -executionpolicy remotesigned -File  C:\Apps\Post\MSAPPS.ps1
             timeout /T 5
-            start /wait Powershell.exe -executionpolicy remotesigned -File  C:\Apps\Post\WISLESS_DomainJoin.ps1
+            REM start /wait Powershell.exe -executionpolicy remotesigned -File  C:\Apps\Post\WISLESS_DomainJoin.ps1
             timeout /T 5
+            shutdown /r /t 0
             exit
     REM Verifying and Cleanup
         :ROUND3
@@ -70,7 +75,4 @@ REM Main
             if exist "%temp%\round1.txt" del "%temp%\round1.txt"
             if exist "%temp%\round2.txt" del "%temp%\round2.txt"
             if exist "%AppData%\Microsoft\Windows\Start Menu\Programs\Startup\WISLESS_Install.cmd" del "%AppData%\Microsoft\Windows\Start Menu\Programs\Startup\WISLESS_Install.cmd"
-        REM To reset Global Protect as it doesn't detect profile on first launch 100% of the time
-        :GPRESET
-            taskkill /F /IM PanGPA.exe /T
 exit
